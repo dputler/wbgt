@@ -18,6 +18,7 @@ calc_solar(date_time, latitude, longitude)
     }
     \item{lon}{
         A numeric vector of longitude values.
+    }
 }
 \value{
     A list containing all of the input variables (described above) in addition to
