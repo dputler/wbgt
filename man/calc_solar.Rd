@@ -6,14 +6,14 @@
     An R wrapper for Larson's C implemenation of Astronomical Almanac solar pos.
 }
 \usage{
-calc_solar(date_time, latitude, longitude)
+calc_solar(date_time, lat, lon)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
     \item{date_time}{
         A character vector of UTC date-time values.
     }
-    \item{latitude}{
+    \item{lat}{
         A numeric vector of latitude values.
     }
     \item{lon}{
