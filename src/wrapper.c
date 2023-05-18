@@ -49,7 +49,7 @@ void wbgt(int *num_obs, int *year, int *month, int *day, int *hour, int *minute,
 void calc_solar(int *num_obs, int *year, int *month, double *day,
     double *days_1900, double *lat, double *lon,
     double *ap_ra, double *ap_dec, double *altitude, double *refraction,
-    double *azimuth, int *distance, int *status)
+    double *azimuth, double *distance, int *status)
 {
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
