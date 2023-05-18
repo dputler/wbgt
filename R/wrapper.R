@@ -109,6 +109,6 @@ calc_solar <- function(date_time, lat, lon) {
         status = as.integer(status),
         PACKAGE = "wbgt"
     )
-    out$zenith <- out$altitude * (pi / 180)
+    out$zenith <- (90 - out$altitude) * (pi / 180)
     out
 }
