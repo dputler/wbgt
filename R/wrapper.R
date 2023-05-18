@@ -69,11 +69,7 @@ wbgt_df <- function(data) {
              Tair, relhum, speed, zspeed, dT, urban)$Twbg))
 }
 
-solarposition <- function(
-    date_time,
-    latitude,
-    longitude
-) {
+calc_solar <- function(date_time, lat, lon) {
     # Calculate the needed date-time variables
     time_1900 <- as.POSIXct("1900-01-01 00:00:00")
     date_time_posix <- as.POSIXct(date_time)
@@ -96,7 +92,7 @@ solarposition <- function(
     status <- rep(0, num_obs)
     # Call the C function
     out <- .C(
-        "solarposition",
+        "calc_solar",
         num_obs = as.integer(num_obs),
         year = as.integer(year),
         month = as.integer(month),

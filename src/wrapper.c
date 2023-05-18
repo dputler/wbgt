@@ -46,3 +46,16 @@ void wbgt(int *num_obs, int *year, int *month, int *day, int *hour, int *minute,
         &est_speed, Tg + i, Tnwb + i, Tpsy + i, Twbg + i);
   }
 }
+void calc_solar(int *num_obs, int *year, int *month, double *day,
+    double *days_1900, double *lat, double *lon,
+    double *ap_ra, double *ap_dec, double *altitude, double *refraction,
+    double *azimuth, int *distance, int *status)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    status[i] = solarposition(year[i], month[i], day[i], days_1900[i],
+        lat[i], lon[i],
+        ap_ra + i, ap_dec + i, altitude + i, refraction + i, azimuth + i, distance + i);
+  }
+}
