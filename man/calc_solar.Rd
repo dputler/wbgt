@@ -24,8 +24,8 @@ calc_solar(date_time, lat, lon)
     A list containing all of the input variables (described above) in addition to
     `ap_ra` (the wet bulb globe temperature in degrees C), `ap_dec` (psychrometric wet bulb temperature in degrees C), 
     `altitude` (natural wet bulb temperature in degrees C), `refraction` (the globe temperature in degrees C), 
-    `azimuth` (the azimut angle in degrees), `distance` (the Earth to Sun distance in AU)
-    and `status`
+    `azimuth` (the azimut angle in degrees), `distance` (the Earth to Sun distance in AU),
+    'zenith` (the zenith angle in radians), and `status`
     (with 0 indicating convergence and -1 indicating non-convergence of the Liljegren algorithm).
 }
 \author{
