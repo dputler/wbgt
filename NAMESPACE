@@ -1,4 +1,4 @@
 useDynLib(wbgt)
 export(wbgt)
 export(wbgt_df)
-export(solarposition)
+export(calc_solar)
