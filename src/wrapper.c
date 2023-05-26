@@ -65,7 +65,7 @@ void calc_irrad(int *num_obs, int *year, int *month,
     double *solar, double *cza, double *fdir)
 {
   int n = *num_obs;
-  for (init i = 0; i < n; ++i)
+  for (int i = 0; i < n; ++i)
   {
     status[i] = calc_solar_parameters(year[i], month[i],
       dday[i], lat[i], lon[i],
