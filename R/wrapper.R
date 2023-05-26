@@ -112,3 +112,37 @@ calc_solar <- function(date_time, lat, lon) {
     out$zenith <- (90 - out$altitude) * (pi / 180)
     out
 }
+
+calc_irrad <- function(date_time, lat, lon) {
+    # Calculate the needed date-time variables
+    date_time_posix <- as.POSIXct(date_time)
+    year <- as.integer(format(date_time_posix, format = "%Y"))
+    month <- as.integer(format(date_time_posix, format = "%m"))
+    dt_day <- as.numeric(format(date_time_posix, format = "%d"))
+    dt_hour <- as.numeric(format(date_time_posix, format = "%H"))
+    dt_minute <- as.numeric(format(date_time_posix, format = "%M"))
+    decimal_hour <- dt_hour + dt_minute / 60.0
+    day <- dt_day + decimal_hour / 24.0
+    # Prep the output variables from the C call
+    num_obs <- length(year)
+    solar <- rep(0.0, num_obs)
+    cza <- rep(0.0, num_obs)
+    fdir <- rep(0.0, num_obs)
+    status <- rep(0, num_obs)
+    # Call the C function
+    out <- .C(
+        "calc_irrad",
+        num_obs = as.integer(num_obs),
+        year = as.integer(year),
+        month = as.integer(month),
+        day = as.double(day),
+        lat = as.double(lat),
+        lon = as.double(lon),
+        solar = as.double(solar),
+        cza = as.double(cza),
+        fdir = as.double(fdir),
+        status = as.integer(status),
+        PACKAGE = "wbgt"
+    )
+    out
+}
