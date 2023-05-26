@@ -62,7 +62,7 @@ void calc_solar(int *num_obs, int *year, int *month, double *day,
 
 void calc_irrad(int *num_obs, int *year, int *month,
     double *dday, double *lat, double *lon,
-    double *solar, double *cza, double *fdir)
+    double *solar, double *cza, double *fdir, int status)
 {
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
