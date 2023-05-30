@@ -89,7 +89,7 @@ calc_solar <- function(date_time, lat, lon) {
     refraction <- rep(0.0, num_obs)
     azimuth <- rep(0.0, num_obs)
     distance <- rep(0.0, num_obs)
-    status <- rep(0, num_obs)
+    status <- rep(0L, num_obs)
     # Call the C function
     out <- .C(
         "calc_solar",
@@ -128,7 +128,7 @@ calc_irrad <- function(date_time, lat, lon) {
     solar <- rep(0.0, num_obs)
     cza <- rep(0.0, num_obs)
     fdir <- rep(0.0, num_obs)
-    status <- rep(0, num_obs)
+    status <- rep(0L, num_obs)
     # Call the C function
     out <- .C(
         "calc_irrad",
