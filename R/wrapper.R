@@ -105,7 +105,7 @@ calc_solar <- function(date_time, lat, lon) {
         altitude = as.double(altitude),
         refraction = as.double(refraction),
         azimuth = as.double(azimuth),
-        distance = as.integer(distance),
+        distance = as.double(distance),
         status = as.integer(status),
         PACKAGE = "wbgt"
     )
