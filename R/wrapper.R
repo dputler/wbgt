@@ -71,8 +71,8 @@ wbgt_df <- function(data) {
 
 calc_solar <- function(date_time, lat, lon) {
     # Calculate the needed date-time variables
-    time_1900 <- as.POSIXct("1900-01-01 00:00:00")
-    date_time_posix <- as.POSIXct(date_time)
+    time_1900 <- as.POSIXct("1900-01-01 00:00:00", tz = "GMT")
+    date_time_posix <- as.POSIXct(date_time, tz = "GMT")
     year <- as.integer(format(date_time_posix, format = "%Y"))
     month <- as.integer(format(date_time_posix, format = "%m"))
     dt_day <- as.numeric(format(date_time_posix, format = "%d"))
@@ -115,7 +115,7 @@ calc_solar <- function(date_time, lat, lon) {
 
 calc_irrad <- function(date_time, lat, lon) {
     # Calculate the needed date-time variables
-    date_time_posix <- as.POSIXct(date_time)
+    date_time_posix <- as.POSIXct(date_time, tz = "GMT")
     year <- as.integer(format(date_time_posix, format = "%Y"))
     month <- as.integer(format(date_time_posix, format = "%m"))
     dt_day <- as.numeric(format(date_time_posix, format = "%d"))
