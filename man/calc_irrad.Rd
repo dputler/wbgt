@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Calculate the parameters associated with solar irradience}
 \description{
-    An R wrapper for Larson's C implemenation of Astronomical Almanac solar irradience
+    Solar irradience based Astronomical Almanac solar position algorithms
 }
 \usage{
 calc_solar(date_time, lat, lon)
@@ -18,6 +18,9 @@ calc_solar(date_time, lat, lon)
     }
     \item{lon}{
         A numeric vector of longitude values.
+    }
+    \item{solar}{
+        A numeric vector of solar irradience values in W/m^2
     }
 }
 \value{

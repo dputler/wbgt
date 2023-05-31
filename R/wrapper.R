@@ -49,7 +49,7 @@ wbgt <- function(
         Tpsy = as.double(Tpsy),
         Twbg = as.double(Twbg),
         status = as.integer(status),
-        PACKAGE="wbgt"
+        PACKAGE = "wbgt"
     )
 
     # any calculation based on pressure outside of normal range yields NA
@@ -113,36 +113,29 @@ calc_solar <- function(date_time, lat, lon) {
     out
 }
 
-calc_irrad <- function(date_time, lat, lon) {
-    # Calculate the needed date-time variables
-    date_time_posix <- as.POSIXct(date_time, tz = "GMT")
-    year <- as.integer(format(date_time_posix, format = "%Y"))
-    month <- as.integer(format(date_time_posix, format = "%m"))
-    dt_day <- as.numeric(format(date_time_posix, format = "%d"))
-    dt_hour <- as.numeric(format(date_time_posix, format = "%H"))
-    dt_minute <- as.numeric(format(date_time_posix, format = "%M"))
-    decimal_hour <- dt_hour + dt_minute / 60.0
-    day <- dt_day + decimal_hour / 24.0
-    # Prep the output variables from the C call
-    num_obs <- length(year)
-    solar <- rep(0.0, num_obs)
-    cza <- rep(0.0, num_obs)
-    fdir <- rep(0.0, num_obs)
-    status <- rep(0L, num_obs)
-    # Call the C function
-    out <- .C(
-        "calc_irrad",
-        num_obs = as.integer(num_obs),
-        year = as.integer(year),
-        month = as.integer(month),
-        day = as.double(day),
-        lat = as.double(lat),
-        lon = as.double(lon),
-        solar = as.double(solar),
-        cza = as.double(cza),
-        fdir = as.double(fdir),
-        status = as.integer(status),
-        PACKAGE = "wbgt"
+calc_irrad <- function(date_time, lat, lon, solar) {
+    SOLAR_CONST <- 1367.0
+    CZA_MIN <- 0.00873
+    NORMSOLAR_MAX <- 0.85
+    sp_l <- calc_solar(date_time, lat, lon)
+    print(sp_l$zenith)
+    cza <- cos(sp_l$zenith)
+    # Do the calculations as in the Argonne calc_solar_parameters function
+    toasolar <- SOLAR_CONST * max(0.0, cza) / (sp_l$distance * sp_l$distance)
+    toasolar[cza < CZA_MIN] <- 0.0
+    print(toasolar)
+    print(solar[toasolar > 0.0] / toasolar[toasolar > 0.0])
+    normsolar <- rep(0.0, length(date_time))
+    normsolar[toasolar > 0.0] <- solar[toasolar > 0.0] / toasolar[toasolar > 0.0]
+    normsolar[normsolar > NORMSOLAR_MAX] <- NORMSOLAR_MAX
+    print(normsolar)
+    solar <- normsolar * toasolar
+    print(solar)
+    fdir <- rep(0.0, length(date_time))
+    fdir[normsolar > 0] <- exp(
+        3.0 - 1.34 * normsolar[normsolar > 0] - 1.65 / normsolar[normsolar > 0]
     )
-    out
+    fdir[normsolar > 0 & fdir > 0.9] <- 0.9
+    fdir[normsolar > 0 & fdir < 0.0] <- 0.0
+    return(data.frame(solar, cza, fdir))
 }
