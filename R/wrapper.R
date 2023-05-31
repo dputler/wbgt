@@ -118,17 +118,13 @@ calc_irrad <- function(date_time, lat, lon, solar) {
     CZA_MIN <- 0.00873
     NORMSOLAR_MAX <- 0.85
     sp_l <- calc_solar(date_time, lat, lon)
-    print(sp_l$zenith)
     cza <- cos(sp_l$zenith)
     # Do the calculations as in the Argonne calc_solar_parameters function
     toasolar <- SOLAR_CONST * max(0.0, cza) / (sp_l$distance * sp_l$distance)
     toasolar[cza < CZA_MIN] <- 0.0
-    print(toasolar)
-    print(solar[toasolar > 0.0] / toasolar[toasolar > 0.0])
     normsolar <- rep(0.0, length(date_time))
     normsolar[toasolar > 0.0] <- solar[toasolar > 0.0] / toasolar[toasolar > 0.0]
     normsolar[normsolar > NORMSOLAR_MAX] <- NORMSOLAR_MAX
-    print(normsolar)
     solar <- normsolar * toasolar
     print(solar)
     fdir <- rep(0.0, length(date_time))
@@ -137,5 +133,5 @@ calc_irrad <- function(date_time, lat, lon, solar) {
     )
     fdir[normsolar > 0 & fdir > 0.9] <- 0.9
     fdir[normsolar > 0 & fdir < 0.0] <- 0.0
-    return(data.frame(solar, cza, fdir))
+    return(data.frame(normsolar, solar, cza, fdir))
 }
