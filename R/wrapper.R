@@ -133,5 +133,5 @@ calc_irrad <- function(date_time, lat, lon, solar) {
     )
     fdir[normsolar > 0 & fdir > 0.9] <- 0.9
     fdir[normsolar > 0 & fdir < 0.0] <- 0.0
-    return(data.frame(normsolar, solar, cza, fdir))
+    return(data.frame(toasolar, normsolar, solar, cza, fdir))
 }
