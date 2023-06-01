@@ -151,7 +151,7 @@ calc_wind <- function(speed, zspeed, solar, dT, daytime, urban) {
         zspeed = as.double(zspeed),
         solar = as.double(solar),
         dT = as.double(dT),
-        daytime = as.integer(dT),
+        daytime = as.integer(daytime),
         urban = as.integer(urban),
         stb_class = as.integer(stb_cls),
         est_wind = as.double(est_wind),
