@@ -125,7 +125,8 @@ calc_irrad <- function(date_time, lat, lon, solar) {
     toasolar <- SOLAR_CONST * cza_adj / (sp_l$distance * sp_l$distance)
     toasolar[cza < CZA_MIN] <- 0.0
     normsolar <- rep(0.0, length(date_time))
-    normsolar[toasolar > 0.0] <- solar[toasolar > 0.0] / toasolar[toasolar > 0.0]
+    normsolar[toasolar > 0.0] <-
+        solar[toasolar > 0.0] / toasolar[toasolar > 0.0]
     normsolar[normsolar > NORMSOLAR_MAX] <- NORMSOLAR_MAX
     solar <- normsolar * toasolar
     print(solar)
@@ -136,4 +137,25 @@ calc_irrad <- function(date_time, lat, lon, solar) {
     fdir[normsolar > 0 & fdir > 0.9] <- 0.9
     fdir[normsolar > 0 & fdir < 0.0] <- 0.0
     return(data.frame(toasolar, normsolar, solar, cza, fdir))
+}
+
+calc_wind <- function(speed, zspeed, solar, dT, daytime, urban) {
+    # Prep the output variables from the C call
+    num_obs <- length(speed)
+    stb_cls <- rep(0L, num_obs)
+    est_wind <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_wind",
+        num_obs = as.integer(num_obs),
+        speed = as.double(speed),
+        zspeed = as.double(zspeed),
+        solar = as.double(solar),
+        dT = as.double(dT),
+        daytime = as.integer(dT),
+        urban = as.integer(urban),
+        stb_class = as.integer(stb_cls),
+        est_wind = as.double(est_wind),
+        PACKAGE = "wbgt"
+    )
+    out
 }

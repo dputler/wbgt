@@ -60,15 +60,13 @@ void calc_solar(int *num_obs, int *year, int *month, double *day,
   }
 }
 
-void calc_irrad(int *num_obs, int *year, int *month,
-    double *dday, double *lat, double *lon,
-    double *solar, double *cza, double *fdir, int *status)
+void calc_wind(int *num_obs, double *speed, double *zspeed, double *solar,
+    double *dT, int *daytime, int *urban, int *stb_cls, double *est_wind)
 {
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
-    status[i] = calc_solar_parameters(year[i], month[i],
-      dday[i], lat[i], lon[i],
-      solar + i, cza + i, fdir + i);
+    stb_cls[i] = stab_srdt(daytime[i], speed[i], solar[i], dT[i]);
+    est_wind[i] = est_wind_speed(speed[i], zspeed[i], stb_cls[i], urban[i]);
   }
 }
