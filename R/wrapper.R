@@ -159,7 +159,8 @@ calc_wind <- function(speed, zspeed, solar, dT, daytime, urban) {
     out
 }
 
-calc_cyl_air <- function(T_a, T_w, Pair, speed) {
+calc_cyl_air <- function(T_a, T_w, P_air, speed) {
+    print(P_air)
     # Create the average between the wick and air temperatures
     Tair <- 0.5 * (T_a + T_w)
     diameter <- 0.007
@@ -173,7 +174,7 @@ calc_cyl_air <- function(T_a, T_w, Pair, speed) {
         diameter = as.double(diameter),
         length = as.double(length),
         Tair = as.double(Tair),
-        Pair = as.double(Pair),
+        Pair = as.double(P_air),
         speed = as.double(speed),
         hw = as.double(hw),
         PACKAGE = "wbgt"
