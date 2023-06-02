@@ -6,7 +6,7 @@
     The thermodynamic model of heat transfer of a natural wet bulb temperature sensor wick.
 }
 \usage{
-calc_cyl_air(T_a, T_w, Pair, speed)
+calc_cyl_air(T_a, T_w, P_air, speed)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -16,7 +16,7 @@ calc_cyl_air(T_a, T_w, Pair, speed)
     \item{T_w}{
         A numeric vector of wick temperature values in K.
     }
-    \item{Pair}{
+    \item{P_air}{
         A numeric vector of surface air pressure values in millibars.
     }
     \item{speed}{

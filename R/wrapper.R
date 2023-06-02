@@ -174,7 +174,7 @@ calc_cyl_air <- function(T_a, T_w, P_air, speed) {
         diameter = as.double(diameter),
         length = as.double(length),
         Tair = as.double(Tair),
-        Pair = as.double(P_air),
+        P_air = as.double(P_air),
         speed = as.double(speed),
         hw = as.double(hw),
         PACKAGE = "wbgt"
