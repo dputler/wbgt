@@ -71,7 +71,7 @@ void calc_wind(int *num_obs, double *speed, double *zspeed, double *solar,
   }
 }
 
-void calc_cyl_air(int *num_obs, double *diameter, double *length, double *Tair,
+void calc_cyl_air(int *num_obs, double diameter, double length, double *Tair,
     double *Pair, double *speed, double *hw)
 {
   int n = *num_obs;
