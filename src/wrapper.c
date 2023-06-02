@@ -70,3 +70,13 @@ void calc_wind(int *num_obs, double *speed, double *zspeed, double *solar,
     est_wind[i] = est_wind_speed(speed[i], zspeed[i], stb_cls[i], urban[i]);
   }
 }
+
+void calc_cyl_air(int *num_obs, double *diameter, double *length, double *Tair,
+    double *Pair, double *speed, double *hw)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    hw[i] = h_cylinder_in_air(diameter, length, Tair[i], Pair[i], speed[i]);
+  }
+}

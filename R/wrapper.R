@@ -61,7 +61,7 @@ wbgt <- function(
 # with names equal to the names of the inputs to wbgt
 # Returns copy of the original data frame with the wbgt appended as a new column
 wbgt_df <- function(data) {
-    if (!requireNamespace("dplyr", quietly=TRUE)) {
+    if (!requireNamespace("dplyr", quietly = TRUE)) {
         stop("Please install dplyr in order to use this function.")
     }
     with(data, dplyr::mutate(data, wbgt = wbgt(year, month, day, hour, minute,
@@ -129,7 +129,6 @@ calc_irrad <- function(date_time, lat, lon, solar) {
         solar[toasolar > 0.0] / toasolar[toasolar > 0.0]
     normsolar[normsolar > NORMSOLAR_MAX] <- NORMSOLAR_MAX
     solar <- normsolar * toasolar
-    print(solar)
     fdir <- rep(0.0, length(date_time))
     fdir[normsolar > 0] <- exp(
         3.0 - 1.34 * normsolar[normsolar > 0] - 1.65 / normsolar[normsolar > 0]
@@ -155,6 +154,28 @@ calc_wind <- function(speed, zspeed, solar, dT, daytime, urban) {
         urban = as.integer(urban),
         stb_class = as.integer(stb_cls),
         est_wind = as.double(est_wind),
+        PACKAGE = "wbgt"
+    )
+    out
+}
+
+calc_cyl_air <- function(T_a, T_w, Pair, speed) {
+    # Create the average between the wick and air temperatures
+    Tair <- 0.5 * (T_a + T_w)
+    diameter <- 0.007
+    length <- 0.0254
+    # Prep the output variables from the C call
+    num_obs <- length(speed)
+    hw <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_cyl_air",
+        num_obs = as.integer(num_obs),
+        diameter = as.double(diameter),
+        length = as.double(length),
+        Tair = as.double(Tair),
+        Pair = as.double(Pair),
+        speed = as.double(speed),
+        hw = as.double(hw),
         PACKAGE = "wbgt"
     )
     out
