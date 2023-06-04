@@ -80,3 +80,12 @@ void calc_cyl_air(int *num_obs, double diameter, double length, double *Tair,
     hw[i] = h_cylinder_in_air(diameter, length, Tair[i], P_air[i], speed[i]);
   }
 }
+
+void calc_viscosity(int *num_obs, double *Tair, double *visc)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    visc[i] = viscosity(Tair[i])
+  }
+}
