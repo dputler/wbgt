@@ -86,6 +86,6 @@ void calc_viscosity(int *num_obs, double *Tair, double *visc)
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
-    visc[i] = viscosity(Tair[i])
+    visc[i] = viscosity(Tair[i]);
   }
 }
