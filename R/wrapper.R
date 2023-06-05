@@ -257,7 +257,7 @@ calc_emis_atm <- function(Tair, rh) {
         "calc_emis_atm",
         num_obs = as.integer(num_obs),
         Tair = as.double(Tair),
-        rh = as.double(Tair),
+        rh = as.double(rh),
         emisatm = as.double(emisatm),
         PACKAGE = "wbgt"
     )
