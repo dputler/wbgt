@@ -98,3 +98,12 @@ void calc_thermal_cond(int *num_obs, double *Tair, double *thrmcond)
     thrmcond[i] = thermal_cond(Tair[i]);
   }
 }
+
+void calc_h_evap(int *num_obs, double *Tair, double *hevap)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    hevap[i] = evap(Tair[i]);
+  }
+}

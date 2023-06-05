@@ -208,3 +208,17 @@ calc_thermal_cond <- function(Tair) {
     )
     out
 }
+
+calc_h_evap <- function(Tair) {
+    num_obs <- length(Tair)
+    hevap <- rep(0.0, num_obs)
+    # Create the average between the wick and air temperatures
+    out <- .C(
+        "calc_h_evap",
+        num_obs = as.integer(num_obs),
+        Tair = as.double(Tair),
+        hevap = as.double(hevap),
+        PACKAGE = "wbgt"
+    )
+    out
+}
