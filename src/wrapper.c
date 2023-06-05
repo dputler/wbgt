@@ -113,6 +113,6 @@ void calc_esat(int *num_obs, double *tk, double *esat_out)
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
-    esat_out[i] = esat(Tair[i], 0);
+    esat_out[i] = esat(tk[i], 0);
   }
 }
