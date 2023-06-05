@@ -181,7 +181,7 @@ void calc_single_Twb(int *num_obs, double *Tair, double *rh, double *Pair,
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
-    Twb[i] = diffusivity(Tair[i], rh[i], Pair[i], speed[i], solar[i],
+    Twb[i] = single_Twb(Tair[i], rh[i], Pair[i], speed[i], solar[i],
     fdir[i], cza[i]);
   }
 }
