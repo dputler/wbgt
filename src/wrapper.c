@@ -170,8 +170,6 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	density = Pair * 100. / (R_AIR * Tref);
 	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
 	Twb_new = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
-	if ( fabs(Twb_new-Twb_prev) < CONVERGENCE ) converged = TRUE;
-	Twb_prev = 0.9*Twb_prev + 0.1*Twb_new;
 	return (Twb_new);
 }
 
