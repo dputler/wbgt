@@ -223,7 +223,7 @@ calc_h_evap <- function(Tair) {
     out
 }
 
-calc_esat <- function(Tair, ) {
+calc_esat <- function(Tair) {
     num_obs <- length(Tair)
     esat_out <- rep(0.0, num_obs)
     out <- .C(
