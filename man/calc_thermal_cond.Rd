@@ -1,12 +1,12 @@
-\name{calc_viscosity}
-\alias{calc_viscosity}
+\name{calc_thermal_cond}
+\alias{calc_thermal_cond}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Calculate the viscosity of the air}
+\title{Calculate the thermal condition of the air}
 \description{
     The thermodynamic model of heat transfer of a natural wet bulb temperature sensor wick.
 }
 \usage{
-calc_viscosity(Tair)
+calc_thermal_cond(Tair)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -15,7 +15,7 @@ calc_viscosity(Tair)
     }
 }
 \value{
-    The viscosity of the air.
+    The thermal condition of the air.
 }
 \author{
     Dan Putler

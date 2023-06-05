@@ -89,3 +89,12 @@ void calc_viscosity(int *num_obs, double *Tair, double *visc)
     visc[i] = viscosity(Tair[i]);
   }
 }
+
+void calc_thermal_cond(int *num_obs, double *Tair, double *thrmcond)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    thrmcond[i] = viscosity(Tair[i]);
+  }
+}

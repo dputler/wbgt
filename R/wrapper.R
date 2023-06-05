@@ -182,7 +182,7 @@ calc_cyl_air <- function(T_a, T_w, P_air, speed) {
 }
 
 calc_viscosity <- function(Tair) {
-    num_obs <- length(speed)
+    num_obs <- length(Tair)
     visc <- rep(0.0, num_obs)
     # Create the average between the wick and air temperatures
     out <- .C(
@@ -190,6 +190,20 @@ calc_viscosity <- function(Tair) {
         num_obs = as.integer(num_obs),
         Tair = as.double(Tair),
         visc = as.double(visc),
+        PACKAGE = "wbgt"
+    )
+    out
+}
+
+calc_thermal_cond <- function(Tair) {
+    num_obs <- length(Tair)
+    thrmcond <- rep(0.0, num_obs)
+    # Create the average between the wick and air temperatures
+    out <- .C(
+        "calc_thermal_cond",
+        num_obs = as.integer(num_obs),
+        Tair = as.double(Tair),
+        thrmcond = as.double(thrmcond),
         PACKAGE = "wbgt"
     )
     out
