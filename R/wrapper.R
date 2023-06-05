@@ -263,3 +263,17 @@ calc_emis_atm <- function(Tair, rh) {
     )
     out
 }
+
+calc_diffusivity <- function(Tair, Pair) {
+    num_obs <- length(Tair)
+    diffus <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_diffusivity",
+        num_obs = as.integer(num_obs),
+        Tair = as.double(Tair),
+        Pair = as.double(Pair),
+        diffus = as.double(diffus),
+        PACKAGE = "wbgt"
+    )
+    out
+}

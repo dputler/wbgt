@@ -134,3 +134,12 @@ void calc_emis_atm(int *num_obs, double *Tair, double *rh, double *emisatm)
     emisatm[i] = emis_atm(Tair[i], rh[i]);
   }
 }
+
+void calc_diffusivity(int *num_obs, double *Tair, double *Pair, double *diffus)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    diffus[i] = diffusivity(Tair[i], Pair[i]);
+  }
+}
