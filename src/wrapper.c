@@ -143,3 +143,45 @@ void calc_diffusivity(int *num_obs, double *Tair, double *Pair, double *diffus)
     diffus[i] = diffusivity(Tair[i], Pair[i]);
   }
 }
+
+double single_Twb(double Tair, double rh, double Pair, double speed, 
+          double solar, double fdir, double cza)
+{
+	static double a = 0.56; /* from Bedingfield and Drew */
+	
+	double	sza, Tsfc, Tdew, Tref, Twb_prev, Twb_new,
+		eair, ewick, density, 
+		Sc,	/* Schmidt number */
+		h,	/* convective heat transfer coefficient */
+		Fatm; /* radiative heating term */
+
+	Tsfc = Tair;
+	sza = acos(cza); /* solar zenith angle, radians */
+	eair = rh * esat(Tair,0);
+	Tdew = dew_point(eair,0);
+	Twb_prev = Tdew; /* first guess is the dew point temperature */
+	Tref = 0.5*( Twb_prev + Tair );	/* evaluate properties at the average temperature */
+	h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
+	Fatm = STEFANB * EMIS_WICK *
+	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
+	     + (1.-ALB_WICK) * solar *
+	       ( (1.-fdir)*(1.+0.25*D_WICK/L_WICK) + fdir*((tan(sza)/PI)+0.25*D_WICK/L_WICK) + ALB_SFC );
+	ewick = esat(Twb_prev,0);
+	density = Pair * 100. / (R_AIR * Tref);
+	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
+	Twb_new = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
+	if ( fabs(Twb_new-Twb_prev) < CONVERGENCE ) converged = TRUE;
+	Twb_prev = 0.9*Twb_prev + 0.1*Twb_new;
+	return (Twb_new);
+}
+
+void calc_single_Twb(int *num_obs, double *Tair, double *rh, double *Pair,
+          double *speed, double *solar, double *fdir, double *cza, double *Twb)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    Twb[i] = diffusivity(Tair[i], rh[i], Pair[i], speed[i], solar[i],
+    fdir[i], cza[i]);
+  }
+}

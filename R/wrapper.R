@@ -277,3 +277,22 @@ calc_diffusivity <- function(Tair, Pair) {
     )
     out
 }
+
+calc_single_Twb <- function(Tair, rh, Pair, speed, solar, fdir, cza) {
+    num_obs <- length(Tair)
+    Twb <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_diffusivity",
+        num_obs = as.integer(num_obs),
+        Tair = as.double(Tair),
+        rh = as.double(rh),
+        Pair = as.double(Pair),
+        speed = as.double(speed),
+        solar = as.double(solar),
+        fdir = as.double(fdir),
+        cza = as.double(cza),
+        Twb = as.double(Twb),
+        PACKAGE = "wbgt"
+    )
+    out
+}
