@@ -116,3 +116,12 @@ void calc_esat(int *num_obs, double *tk, double *esat_out)
     esat_out[i] = esat(tk[i], 0);
   }
 }
+
+void calc_dew_point(int *num_obs, double *e, double *dew_pt)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    dew_pt[i] = dew_point(tk[i], 0);
+  }
+}

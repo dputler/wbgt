@@ -235,3 +235,17 @@ calc_esat <- function(Tair) {
     )
     out
 }
+
+calc_dew_point <- function(Tair) {
+    esat <- calc_esat(Tair)$esat_out
+    num_obs <- length(Tair)
+    dew_pt <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_dew_point",
+        num_obs = as.integer(num_obs),
+        e = as.double(esat),
+        dew_pt = as.double(dew_pt),
+        PACKAGE = "wbgt"
+    )
+    out
+}
