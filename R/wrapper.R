@@ -249,3 +249,17 @@ calc_dew_point <- function(Tair) {
     )
     out
 }
+
+calc_emis_atm <- function(Tair, rh) {
+    num_obs <- length(Tair)
+    emisatm <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_emis_atm",
+        num_obs = as.integer(num_obs),
+        Tair = as.double(Tair),
+        rh = as.double(Tair),
+        emisatm = as.double(emisatm),
+        PACKAGE = "wbgt"
+    )
+    out
+}

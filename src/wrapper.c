@@ -125,3 +125,12 @@ void calc_dew_point(int *num_obs, double *e, double *dew_pt)
     dew_pt[i] = dew_point(e[i], 0);
   }
 }
+
+void calc_emis_atm(int *num_obs, double *Tair, double *rh, double *emisatm)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    emisatm[i] = emis_atm(Tair[i], rh[i]);
+  }
+}
