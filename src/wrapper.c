@@ -122,6 +122,6 @@ void calc_dew_point(int *num_obs, double *e, double *dew_pt)
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
-    dew_pt[i] = dew_point(tk[i], 0);
+    dew_pt[i] = dew_point(e[i], 0);
   }
 }
