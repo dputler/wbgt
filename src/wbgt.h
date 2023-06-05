@@ -261,5 +261,8 @@ double	speed,
 solar,
 dT;
 */
-  
+
+double single_Twb(double Tair, double rh, double Pair, double speed, 
+                  double solar, double fdir, double cza);
+
 #endif /* WBGT_H */
