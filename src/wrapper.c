@@ -107,3 +107,12 @@ void calc_h_evap(int *num_obs, double *Tair, double *hevap)
     hevap[i] = evap(Tair[i]);
   }
 }
+
+void calc_esat(int *num_obs, double *tk, double *esat_out)
+{
+  int n = *num_obs;
+  for (int i = 0; i < n; ++i)
+  {
+    esat_out[i] = esat(Tair[i], 0);
+  }
+}

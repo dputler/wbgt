@@ -222,3 +222,16 @@ calc_h_evap <- function(Tair) {
     )
     out
 }
+
+calc_esat <- function(Tair, ) {
+    num_obs <- length(Tair)
+    esat_out <- rep(0.0, num_obs)
+    out <- .C(
+        "calc_esat",
+        num_obs = as.integer(num_obs),
+        tk = as.double(Tair),
+        esat_out = as.double(esat_out),
+        PACKAGE = "wbgt"
+    )
+    out
+}
