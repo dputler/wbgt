@@ -280,8 +280,10 @@ calc_diffusivity <- function(Tair, Pair) {
 
 calc_single_Twb <- function(Tair, rh, Pair, speed, solar, fdir, cza) {
     num_obs <- length(Tair)
-    A <- rep(0.0, num_obs)
-    B <- rep(0.0, num_obs)
+    Fatm <- rep(0.0, num_obs)
+    ewick <- rep(0.0, num_obs)
+    density <- rep(0.0, num_obs)
+    Sc <- rep(0.0, num_obs)
     Twb <- rep(0.0, num_obs)
     status <- rep(0L, num_obs)
     out <- .C(
@@ -294,8 +296,10 @@ calc_single_Twb <- function(Tair, rh, Pair, speed, solar, fdir, cza) {
         solar = as.double(solar),
         fdir = as.double(fdir),
         cza = as.double(cza),
-        A = as.double(A),
-        B = as.double(B),
+        Fatm = as.double(Fatm),
+        ewick = as.double(ewick),
+        density = as.double(density),
+        Sc = as.double(Sc),
         Twb = as.double(Twb),
         status = as.integer(status),
         PACKAGE = "wbgt"

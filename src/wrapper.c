@@ -145,16 +145,13 @@ void calc_diffusivity(int *num_obs, double *Tair, double *Pair, double *diffus)
 }
 
 double single_Twb(double Tair, double rh, double Pair, double speed, 
-          double solar, double fdir, double cza, double *A, double *B,
-          double *Twb)
+          double solar, double fdir, double cza, double *fatm, double *ewick,
+          double *density, double *Sc, double *Twb)
 {
 	static double a = 0.56; /* from Bedingfield and Drew */
 	
-	double	sza, Tsfc, Tdew, Tref, Twb_prev,
-		eair, ewick, density, 
-		Sc,	/* Schmidt number */
+	double	sza, Tsfc, Tdew, Tref, Twb_prev, eair,
 		h,	/* convective heat transfer coefficient */
-		Fatm; /* radiative heating term */
 
 	Tsfc = Tair;
 	sza = acos(cza); /* solar zenith angle, radians */
@@ -163,19 +160,15 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	Twb_prev = Tdew; /* first guess is the dew point temperature */
 	Tref = 0.5*( Twb_prev + Tair );	/* evaluate properties at the average temperature */
 	h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
-  *A = STEFANB * EMIS_WICK *
-	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) );
-  *B = (1.-ALB_WICK) * solar *
-	    ( (1.-fdir)*(1.+0.25*D_WICK/L_WICK) + fdir*((tan(sza)/PI)+0.25*D_WICK/L_WICK) + ALB_SFC );
-	Fatm = STEFANB * EMIS_WICK *
+	*Fatm = STEFANB * EMIS_WICK *
 	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
 	     + (1.-ALB_WICK) * solar *
 	       ( (1.-fdir)*(1.+0.25*D_WICK/L_WICK) + fdir*((tan(sza)/PI)+0.25*D_WICK/L_WICK) + ALB_SFC );
-	ewick = esat(Twb_prev,0);
-	density = Pair * 100. / (R_AIR * Tref);
-	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
-	*Twb = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
-  if ( *A + *B == *Twb )
+	*ewick = esat(Twb_prev,0);
+	*density = Pair * 100. / (R_AIR * Tref);
+	*Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
+	*Twb = Tair - evap(Tref) / RATIO * (*ewick - eair)/(Pair - *ewick) * pow(Pr/ *Sc, a) + *Fatm/h;
+  if (Fatm >= 0.0)
   {
     return (0);
   }
