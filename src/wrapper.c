@@ -145,7 +145,7 @@ void calc_diffusivity(int *num_obs, double *Tair, double *Pair, double *diffus)
 }
 
 double single_Twb(double Tair, double rh, double Pair, double speed, 
-          double solar, double fdir, double cza, double *fatm, double *ewick,
+          double solar, double fdir, double cza, double *Fatm, double *ewick,
           double *density, double *Sc, double *Twb)
 {
 	static double a = 0.56; /* from Bedingfield and Drew */
@@ -166,9 +166,9 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	       ( (1.-fdir)*(1.+0.25*D_WICK/L_WICK) + fdir*((tan(sza)/PI)+0.25*D_WICK/L_WICK) + ALB_SFC );
 	*ewick = esat(Twb_prev,0);
 	*density = Pair * 100. / (R_AIR * Tref);
-	*Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
+	*Sc = viscosity(Tref) / ((*density) * diffusivity(Tref, Pair));
 	*Twb = Tair - evap(Tref) / RATIO * (*ewick - eair)/(Pair - *ewick) * pow(Pr/ *Sc, a) + *Fatm/h;
-  if (Fatm >= 0.0)
+  if (*Fatm >= 0.0)
   {
     return (0);
   }
@@ -179,13 +179,13 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 }
 
 void calc_single_Twb(int *num_obs, double *Tair, double *rh, double *Pair,
-          double *speed, double *solar, double *fdir, double *cza, double *A,
-          double *B, double *Twb, int *status)
+          double *speed, double *solar, double *fdir, double *cza, double *Fatm,
+          double *ewick, double *density, double *Sc, double *Twb, int *status)
 {
   int n = *num_obs;
   for (int i = 0; i < n; ++i)
   {
     status[i] = single_Twb(Tair[i], rh[i], Pair[i], speed[i], solar[i],
-    fdir[i], cza[i], A + i, B + i, Twb + i);
+    fdir[i], cza[i], Fatm + i, ewick + i, density + i, Sc + i, Twb + i);
   }
 }
