@@ -30,7 +30,8 @@ calc_single_Twb(Tair, rh, Pair, speed, solar, fdir, cza)
     }
 }
 \value{
-    The first pass through the Argonne model natural wet bulb temperature.
+    The first pass through the Argonne model natural wet bulb temperature along
+    with its subcomponents to find the python translation issue.
 }
 \author{
     Dan Putler
