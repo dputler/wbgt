@@ -283,6 +283,7 @@ calc_single_Twb <- function(Tair, rh, Pair, speed, solar, fdir, cza) {
     A <- rep(0.0, num_obs)
     B <- rep(0.0, num_obs)
     Twb <- rep(0.0, num_obs)
+    status <- rep(0L, num_obs)
     out <- .C(
         "calc_single_Twb",
         num_obs = as.integer(num_obs),
@@ -296,6 +297,7 @@ calc_single_Twb <- function(Tair, rh, Pair, speed, solar, fdir, cza) {
         A = as.double(A),
         B = as.double(B),
         Twb = as.double(Twb),
+        status = as.integer(status),
         PACKAGE = "wbgt"
     )
     out
