@@ -164,7 +164,7 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	Tref = 0.5*( Twb_prev + Tair );	/* evaluate properties at the average temperature */
 	h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
   A = STEFANB * EMIS_WICK *
-	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
+	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) );
 	Fatm = STEFANB * EMIS_WICK *
 	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
 	     + (1.-ALB_WICK) * solar *
