@@ -176,9 +176,9 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	density = Pair * 100. / (R_AIR * Tref);
 	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
 	*Twb = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
-  if *A + *B == *Twb
+  if ( *A + *B == *Twb )
   {
-    return(0);
+    return (0);
   }
   else
   {
