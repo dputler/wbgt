@@ -150,7 +150,7 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 {
 	static double a = 0.56; /* from Bedingfield and Drew */
 	
-	double	sza, Tsfc, Tdew, Tref, Twb_prev, Twb_new,
+	double	sza, Tsfc, Tdew, Tref, Twb_prev,
 		eair, ewick, density, 
 		Sc,	/* Schmidt number */
 		h,	/* convective heat transfer coefficient */
