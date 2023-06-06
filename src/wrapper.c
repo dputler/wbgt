@@ -154,7 +154,6 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 		eair, ewick, density, 
 		Sc,	/* Schmidt number */
 		h,	/* convective heat transfer coefficient */
-    B,
 		Fatm; /* radiative heating term */
 
 	Tsfc = Tair;
