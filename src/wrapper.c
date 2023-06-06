@@ -170,7 +170,7 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	density = Pair * 100. / (R_AIR * Tref);
 	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
 	Twb_new = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
-	return (Twb_new);
+	return (Fatm);
 }
 
 void calc_single_Twb(int *num_obs, double *Tair, double *rh, double *Pair,
