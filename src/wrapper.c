@@ -150,10 +150,9 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 {
 	static double a = 0.56; /* from Bedingfield and Drew */
 	
-	double	sza, Tsfc, Tdew, Tref, Twb_prev, eair,
-		h,	/* convective heat transfer coefficient */
+	double	sza, Tsfc, Tdew, Tref, Twb_prev, eair, h
 
-	Tsfc = Tair;
+	Tsfc = 1.0 * Tair;
 	sza = acos(cza); /* solar zenith angle, radians */
 	eair = rh * esat(Tair,0);
 	Tdew = dew_point(eair,0);
