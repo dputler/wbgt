@@ -153,6 +153,7 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 		eair, ewick, density, 
 		Sc,	/* Schmidt number */
 		h,	/* convective heat transfer coefficient */
+    A,
 		Fatm; /* radiative heating term */
 
 	Tsfc = Tair;
@@ -162,6 +163,8 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	Twb_prev = Tdew; /* first guess is the dew point temperature */
 	Tref = 0.5*( Twb_prev + Tair );	/* evaluate properties at the average temperature */
 	h = h_cylinder_in_air(D_WICK, L_WICK, Tref, Pair, speed);
+  A = STEFANB * EMIS_WICK *
+	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
 	Fatm = STEFANB * EMIS_WICK *
 	       ( 0.5*( emis_atm(Tair,rh)*pow(Tair,4.) + EMIS_SFC*pow(Tsfc,4.) ) - pow(Twb_prev,4.) )
 	     + (1.-ALB_WICK) * solar *
@@ -170,7 +173,7 @@ double single_Twb(double Tair, double rh, double Pair, double speed,
 	density = Pair * 100. / (R_AIR * Tref);
 	Sc = viscosity(Tref)/(density*diffusivity(Tref,Pair));
 	Twb_new = Tair - evap(Tref)/RATIO * (ewick-eair)/(Pair-ewick) * pow(Pr/Sc,a) + Fatm/h;
-	return (Fatm);
+	return (A);
 }
 
 void calc_single_Twb(int *num_obs, double *Tair, double *rh, double *Pair,
